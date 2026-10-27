@@ -42,9 +42,15 @@ I compared the generated cases against the manual test cases I wrote for [SauceD
 - It also raised a security point I hadn't considered: the error for an unknown username should be the same as for a wrong password, so attackers can't tell which usernames exist.
 
 **What it missed**
-- Locked-out or disabled accounts (my TC-03). The story never mentions account states, but a locked account is a standard login scenario and it wasn't suggested.
-- Password field masking, another common login check.
-- Its cases mostly duplicated my basics: TC001, TC004, and TC006 map to my TC-01, TC-02, and TC-04.
+- Locked-out or disabled accounts (my TC-03): none of the titles in any of three runs mention one, although it's a standard login scenario. The story doesn't mention account states, so this is a limit of generic input.
+- Its basic cases mostly duplicated my own: valid login, wrong password, and empty fields map to my TC-01, TC-02, and TC-04.
+- Password field masking appeared in two of three runs, so coverage of it is inconsistent rather than missing.
+
+**Consistency between runs**
+- I ran the same story three times. In the two runs I saved (`sample-runs/`), 5 of 8 case titles were identical.
+- The remaining three covered the same themes but split them differently. For example, one run paired password masking with logout and re-login, and the other paired it with session persistence on refresh.
+- Case ID format also varied between runs (`TC001` vs `TC-001`) because my prompt didn't specify one.
+- Takeaway for testing: the output isn't reproducible, so it can't be treated as a fixed test plan.
 
 **What it invented or got wrong**
 - UI details it couldn't know: it called the button 'Log in', but on SauceDemo it's 'Login'.
