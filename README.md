@@ -69,7 +69,6 @@ I compared the generated cases against the manual test cases I wrote for [SauceD
 
 - Output varies from run to run, so results aren't reproducible.
 - The model can invent requirements that aren't in the story, so generated cases need review.
-- [Add anything else you noticed.]
 
 ## Planned next steps
 
