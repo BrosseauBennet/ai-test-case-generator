@@ -30,21 +30,30 @@ ANTHROPIC_API_KEY=your-key-here
 
 ## How I verified the output
 
-I compared the generated cases against the manual test cases I wrote for [SauceDemo](https://github.com/BrosseauBennet/saucedemo-testing) across [number] runs.
+I compared the generated cases against the manual test cases I wrote for [SauceDemo](https://github.com/BrosseauBennet/saucedemo-testing) across 1 run.
 
 **What it caught that I missed**
-- [Example, with case ID or title]
+- Five cases that weren't in my manual login set (TC-01 to TC-04):
+  - TC002: submitting the form with the Enter key
+  - TC003: session persists after a page refresh
+  - TC005: login with a non-existent username (I only tested a wrong password)
+  - TC007: username with leading/trailing spaces and different letter case
+  - TC008: very long input and an SQL injection string
+- It also raised a security point I hadn't considered: the error for an unknown username should be the same as for a wrong password, so attackers can't tell which usernames exist.
 
 **What it missed**
-- [Example from your manual cases that never appeared]
+- Locked-out or disabled accounts (my TC-03). The story never mentions account states, but a locked account is a standard login scenario and it wasn't suggested.
+- Password field masking, another common login check.
+- Its cases mostly duplicated my basics: TC001, TC004, and TC006 map to my TC-01, TC-02, and TC-04.
 
 **What it invented or got wrong**
-- [Example: a rule or UI element the story never mentioned]
+- UI details it couldn't know: it called the button 'Log in', but on SauceDemo it's 'Login'.
+- Expected results that differ from the real app: for empty fields, TC006 expects validation messages for both username and password, but SauceDemo shows only 'Username is required' (my TC-04).
+- Requirements the story never stated: session persistence (TC003), identical error messages for unknown users and wrong passwords (TC005), and whitespace/case handling rules (TC007).
+- Untestable expected results: TC007 accepts either outcome (trim and log in, or reject), so it can never fail and can't be automated as an assertion.
+- Bundled tests: TC008 combines a 1000+ character input and an SQL injection string in one case, with an unclear "or".
 
-**Consistency between runs**
-- [Same story, different output? How much did the cases differ?]
-
-**Takeaway:** [One sentence, for example: useful as a brainstorming starting point, but every case needs human review before it goes into a test plan.]
+**Takeaway:** The generator is a good source of edge cases I hadn't thought of, but it works from generic assumptions, so its expected results need checking against the real app before they go into a test plan.
 
 ## Problems I ran into
 
