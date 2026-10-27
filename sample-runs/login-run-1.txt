@@ -1,0 +1,56 @@
+[positive] TC-001: Successful login with valid username and password
+   1. Navigate to the login page
+   2. Enter a valid registered username
+   3. Enter the correct password for that username
+   4. Click the 'Log in' button
+   Expected: User is authenticated and redirected to their account page, which displays their account information.
+
+[positive] TC-002: Login by pressing Enter key after entering valid credentials
+   1. Navigate to the login page
+   2. Enter a valid username
+   3. Enter the correct password
+   4. Press the Enter key instead of clicking the login button
+   Expected: The form is submitted, the user is logged in, and the account page is displayed.
+
+[positive] TC-003: Password field masks input and user can log in after logout and re-login
+   1. Navigate to the login page and type a valid password into the password field, verifying characters are masked
+   2. Enter a valid username and click 'Log in'
+   3. Verify the account page is displayed, then log out
+   4. Log in again with the same valid credentials
+   Expected: Password characters are masked during entry, and the user can successfully log in again after logging out, seeing their account page each time.
+
+[negative] TC-004: Login fails with valid username and incorrect password
+   1. Navigate to the login page
+   2. Enter a valid registered username
+   3. Enter an incorrect password
+   4. Click the 'Log in' button
+   Expected: Login is rejected, a generic error message such as 'Invalid username or password' is shown, and the user remains on the login page without access to the account.
+
+[negative] TC-005: Login fails with non-existent username
+   1. Navigate to the login page
+   2. Enter a username that is not registered
+   3. Enter any password
+   4. Click the 'Log in' button
+   Expected: Login is rejected with the same generic error message used for incorrect passwords (no disclosure of whether the username exists), and no account page is shown.
+
+[negative] TC-006: Login fails when username and password fields are empty
+   1. Navigate to the login page
+   2. Leave the username field empty
+   3. Leave the password field empty
+   4. Click the 'Log in' button
+   Expected: Form submission is blocked or rejected, validation messages indicate that username and password are required, and the user is not logged in.
+
+[edge] TC-007: Login with SQL injection and special characters in credentials
+   1. Navigate to the login page
+   2. Enter "' OR '1'='1' --" in the username field
+   3. Enter "' OR '1'='1' --" in the password field
+   4. Click the 'Log in' button
+   Expected: Input is safely handled and treated as literal text, login is rejected with a generic error message, no server error occurs, and no unauthorized access is granted.
+
+[edge] TC-008: Login with maximum-length credentials and leading/trailing whitespace in username
+   1. Navigate to the login page
+   2. Enter a valid username padded with leading and trailing spaces
+   3. Enter a valid password at the maximum allowed length (or a very long string exceeding the limit in a separate attempt)
+   4. Click the 'Log in' button
+   Expected: The system handles the input consistently: whitespace in the username is either trimmed so login succeeds or rejected with a clear message; over-length input is rejected gracefully without crashing or truncating unexpectedly.
+
